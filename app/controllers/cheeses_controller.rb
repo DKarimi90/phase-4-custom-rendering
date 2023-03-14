@@ -3,7 +3,11 @@ class CheesesController < ApplicationController
   # GET /cheeses
   def index
     cheeses = Cheese.all
-    render json: cheeses
+    if cheese
+      render json: cheeses, only: [:id, :name, :price, :is_best_seller], methods: [:summary]
+    else
+      render json: {error: 'Cheese not found'}, status: :not_found
+  end
   end
 
   # GET /cheeses/:id
